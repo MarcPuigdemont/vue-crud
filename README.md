@@ -8,6 +8,15 @@ As a style framework, BootstrapVue has been chosen as it provides a directive an
 
 The coding style is based on Airbnb, but since it's using eslint + @vue/eslint-config-airbnb + prettier maybe some of the rules may be off. The intention is not being 100% accurate with one coding style but to provide a consistent style over all the written code.
 
+## Desgin decission taken
+
+This I left behind, and could be added as improvements:
+
+- Localization, only english is used.
+- Frontend pagination / Backend pagination.
+- Themes and theme selector for primary and secondary App colors (nothing to do with airplanes)
+  - Be able to select an Airline and apply it's colors to the current app them
+
 ## Project setup
 
 ```

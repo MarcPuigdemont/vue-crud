@@ -4,8 +4,8 @@
       <b-col>
         <h1>Airline List</h1>
         <b-button-group class="display_buttons">
-          <b-button class="display_button"><i class="material-icons">view_headline</i></b-button>
-          <b-button class="display_button"><i class="material-icons">view_module</i></b-button>
+          <b-button class="display_button"><i class="material-icons" @click="displayMode = 'list'">view_headline</i></b-button>
+          <b-button class="display_button"><i class="material-icons" @click="displayMode = 'grid'">view_module</i></b-button>
         </b-button-group>
 
         <div class="border-top my-3"></div>
@@ -52,7 +52,7 @@
       <AirlineForm v-if="formVisible" :action="action" :entity="selectedAirline" class="mb-4 w-75" @refresh="fetchList" @close="close" />
     </b-row>
     <b-row no-gutters>
-      <AirlineList :airlines="airlines" :filter="searchFilter" :service-filter="activeFilterServices" @edit="edit" />
+      <component :is="dynamicComponent" :airlines="airlines" :filter="searchFilter" :service-filter="activeFilterServices" @edit="edit" />
     </b-row>
     <b-alert class="fixed-alert" :show="alertDismissCountDown" dismissible :variant="alertVariant" @dismissed="alertDismissCountDown = 0">
       {{ alertMessage }}
@@ -65,13 +65,13 @@
 import axios from 'axios';
 import AirlineForm from '@/components/AirlineForm.vue';
 import AirlineList from '@/components/AirlineList.vue';
+import AirlineGrid from '@/components/AirlineGrid.vue';
 import constants from '@/constants';
 
 export default {
-  name: 'home',
+  name: 'Airlines',
   components: {
     AirlineForm,
-    AirlineList,
   },
   data() {
     return {
@@ -89,11 +89,15 @@ export default {
       alertDismissCountDown: 0,
       alertMessage: '',
       alertVariant: 'success',
+      displayMode: 'list',
     };
   },
   computed: {
     activeFilterServices() {
       return Object.keys(this.filterServices).filter(key => this.filterServices[key]) || [];
+    },
+    dynamicComponent() {
+      return this.displayMode === 'list' ? AirlineList : AirlineGrid;
     },
   },
   mounted() {

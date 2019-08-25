@@ -44,6 +44,7 @@ import axios from 'axios';
 import constants from '@/constants';
 
 export default {
+  name: 'AirlineForm',
   props: {
     action: {
       type: String,

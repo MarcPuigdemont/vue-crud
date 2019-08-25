@@ -9,6 +9,7 @@
 import constants from '@/constants';
 
 export default {
+  name: 'AirlineListItemServices',
   props: { services: Array },
   methods: {
     getIcon: serviceName => constants.ICONS[serviceName.toUpperCase()] || 'error',

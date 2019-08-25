@@ -12,8 +12,7 @@
 </template>
 <script>
 import AirlineListItem from './AirlineListItem.vue';
-
-const contains = (string, substring) => string.toLowerCase().indexOf(substring.toLowerCase()) > -1;
+import { filterByStringAndServices } from '@/services/filterService';
 
 export default {
   name: 'AirlineList',
@@ -27,21 +26,12 @@ export default {
   },
   computed: {
     filteredAirlines() {
-      if (this.filter.trim() === '') {
-        return this.filterByServices(this.airlines);
-      } else {
-        const matchingAirlines = this.airlines.filter(a => contains(a.iata, this.filter) || contains(a.name, this.filter));
-        return this.filterByServices(matchingAirlines);
-      }
+      return filterByStringAndServices(this.airlines, this.filter, this.serviceFilter);
     },
   },
   methods: {
     edit(airline) {
       this.$emit('edit', airline);
-    },
-    filterByServices(airlines) {
-      const numOfServices = this.serviceFilter.length;
-      return airlines.filter(airline => this.serviceFilter.filter(s => airline.services[s]).length === numOfServices);
     },
   },
 };

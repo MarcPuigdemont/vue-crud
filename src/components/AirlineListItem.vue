@@ -24,6 +24,7 @@
 import AirlineListItemServices from './AirlineListItemServices.vue';
 
 export default {
+  name: 'AirlineListItem',
   props: {
     airline: Object,
   },
