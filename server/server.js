@@ -3,9 +3,16 @@ const express = require('express');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const bodyParser = require('body-parser');
 const fs = require('fs');
+require('dotenv').config();
 
 const app = express();
 app.use(bodyParser.json());
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, HEAD');
+  next();
+});
 
 const cleanAirline = airline => {
   const cleanAirLine = {};
@@ -58,7 +65,7 @@ app.post('/airline', (req, res) => {
     res.status(400).send('Missing iata or name properties');
   } else {
     const exists = airlines.find(
-      airline => airline.iata.toLowerCase() === data.iata.toLowerCase() && airline.name.toLowerCase() === data.name.toLowerCase()
+      airline => airline.iata.toLowerCase() === data.iata.toLowerCase() && airline.name.toLowerCase() === data.name.toLowerCase(),
     );
     if (exists) {
       res.status(400).send('Trying to create an already existing airline, please use PUT method instead');
@@ -77,7 +84,7 @@ app.put('/airline', (req, res) => {
     res.status(400).send('Missing iata or name properties');
   } else {
     const foundAirline = airlines.find(
-      airline => airline.iata.toLowerCase() === data.iata.toLowerCase() && airline.name.toLowerCase() === data.name.toLowerCase()
+      airline => airline.iata.toLowerCase() === data.iata.toLowerCase() && airline.name.toLowerCase() === data.name.toLowerCase(),
     );
     if (foundAirline) {
       const airline = cleanAirline(req.body);
@@ -96,11 +103,11 @@ app.delete('/airline', (req, res) => {
     res.status(400).send('Missing iata or name properties');
   } else {
     const foundAirline = airlines.find(
-      airline => airline.iata.toLowerCase() === data.iata.toLowerCase() && airline.name.toLowerCase() === data.name.toLowerCase()
+      airline => airline.iata.toLowerCase() === data.iata.toLowerCase() && airline.name.toLowerCase() === data.name.toLowerCase(),
     );
     if (foundAirline) {
       airlines = airlines.filter(
-        airline => airline.iata.toLowerCase() !== foundAirline.iata.toLowerCase() && airline.name.toLowerCase() !== foundAirline.name.toLowerCase()
+        airline => airline.iata.toLowerCase() !== foundAirline.iata.toLowerCase() && airline.name.toLowerCase() !== foundAirline.name.toLowerCase(),
       );
       res.send('DELETE successful to /airline');
     } else {
@@ -109,6 +116,6 @@ app.delete('/airline', (req, res) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log('Example app listening on port 3000!');
+app.listen(process.env.SERVER_PORT, () => {
+  console.log(`Airlines server is listening on port ${process.env.SERVER_PORT}!`);
 });

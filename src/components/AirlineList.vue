@@ -11,33 +11,8 @@ export default {
   components: {
     AirlineListItem,
   },
-  data() {
-    return {
-      airlines: [
-        {
-          iata: 'VY',
-          name: 'Vueling',
-          primary_color: '#fc0',
-          secondary_color: '#666',
-          services: {
-            bags: false,
-            checkin: true,
-            seats: true,
-          },
-        },
-        {
-          iata: 'FR',
-          name: 'Ryanair',
-          primary_color: '#133590',
-          secondary_color: '#f1c931',
-          services: {
-            bags: true,
-            checkin: false,
-            seats: false,
-          },
-        },
-      ],
-    };
+  props: {
+    airlines: Array,
   },
 };
 </script>

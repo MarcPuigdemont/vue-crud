@@ -17,19 +17,29 @@
       </b-col>
     </b-row>
     <b-row no-gutters>
-      <AirlineList />
+      <AirlineList :airlines="airlines" />
     </b-row>
   </b-container>
 </template>
 
 <script>
 // @ is an alias to /src
+import axios from 'axios';
 import AirlineList from '@/components/AirlineList.vue';
+import constants from '@/constants';
 
 export default {
   name: 'home',
   components: {
     AirlineList,
+  },
+  data() {
+    return {
+      airlines: [],
+    };
+  },
+  mounted() {
+    axios.get(`${constants.SERVER_URL}/airlines`).then(response => (this.airlines = response.data));
   },
 };
 </script>
