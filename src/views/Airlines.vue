@@ -1,17 +1,17 @@
 <template>
-  <b-container>
+  <b-container class="pt-3">
     <b-row no-gutters>
       <b-col>
         <h1>Airline List</h1>
         <b-button-group class="display_buttons">
-          <b-button class="display_button"><i class="material-icons" @click="displayMode = 'list'">view_headline</i></b-button>
-          <b-button class="display_button"><i class="material-icons" @click="displayMode = 'grid'">view_module</i></b-button>
+          <b-button variant="light" class="display_button"><i class="material-icons" @click="displayMode = 'list'">view_headline</i></b-button>
+          <b-button variant="light" class="display_button"><i class="material-icons" @click="displayMode = 'grid'">view_module</i></b-button>
         </b-button-group>
 
         <div class="border-top my-3"></div>
 
         <div class="d-flex justify-content-between my-3 my-lg-3">
-          <b-button pill variant="success" class="add_button"><i class="material-icons" @click="create">add</i></b-button>
+          <b-button pill class="add_button" @click="create"><i class="material-icons">add</i></b-button>
           <div class="d-flex flex-direction-row">
             <i
               class="material-icons filter-button"
@@ -48,8 +48,17 @@
         </div>
       </b-col>
     </b-row>
-    <b-row no-gutters class="justify-content-center">
-      <AirlineForm v-if="formVisible" :action="action" :entity="selectedAirline" class="mb-4 w-75" @refresh="fetchList" @close="close" />
+    <b-row v-if="formVisible" no-gutters class="justify-content-center">
+      <div class="p-3 mb-4 w-75" style="background-color: #f8f9fa">
+        <AirlineForm
+          :action="action"
+          :entity="selectedAirline"
+          :style="{ 'max-height': formVisible ? '300px' : '0px' }"
+          class="mb-2"
+          @refresh="fetchList"
+          @close="close"
+        />
+      </div>
     </b-row>
     <b-row no-gutters>
       <component :is="dynamicComponent" :airlines="airlines" :filter="searchFilter" :service-filter="activeFilterServices" @edit="edit" />
@@ -131,7 +140,7 @@ export default {
 <style scoped>
 .display_buttons {
   position: absolute;
-  top: 0;
+  top: 12px;
   right: 0;
 }
 .display_button {
@@ -147,6 +156,8 @@ export default {
   position: relative;
   outline: none !important;
   box-shadow: none !important;
+  background-color: #293041;
+  border-color: #293041;
 }
 .add_button i {
   position: absolute;

@@ -20,14 +20,14 @@
 
       <b-form-group id="input-group-5" label="Services:" label-for="checkboxes-1" class="align-content-end w-50">
         <b-form-checkbox-group v-model="form.services" id="checkboxes-1" class="ml-2">
-          <b-form-checkbox value="bags" title="Bags">
-            <i class="material-icons" :disabled="!form.services.find(s => s === 'bags')">{{ icons['BAGS'] }}</i>
+          <b-form-checkbox value="bags">
+            <i class="material-icons" title="Bags" :disabled="!form.services.find(s => s === 'bags')">{{ icons['BAGS'] }}</i>
           </b-form-checkbox>
-          <b-form-checkbox value="checkin" title="Check-in">
-            <i class="material-icons" :disabled="!form.services.find(s => s === 'checkin')">{{ icons['CHECKIN'] }}</i>
+          <b-form-checkbox value="checkin">
+            <i class="material-icons" title="Check-in" :disabled="!form.services.find(s => s === 'checkin')">{{ icons['CHECKIN'] }}</i>
           </b-form-checkbox>
-          <b-form-checkbox value="seats" title="Seats">
-            <i class="material-icons" :disabled="!form.services.find(s => s === 'seats')">{{ icons['SEATS'] }}</i>
+          <b-form-checkbox value="seats">
+            <i class="material-icons" title="Seats" :disabled="!form.services.find(s => s === 'seats')">{{ icons['SEATS'] }}</i>
           </b-form-checkbox>
         </b-form-checkbox-group>
       </b-form-group>
@@ -119,7 +119,7 @@ export default {
       axios
         .delete(`${constants.SERVER_URL}/airline`, { data: { iata: this.entity.iata, name: this.entity.name } })
         .then(() => this.notifySuccess('An Airline has been removed'))
-        .catch(e => this.notifyError('Error deleting the airline'));
+        .catch(() => this.notifyError('Error deleting the airline'));
     },
     onReset(evt) {
       evt.preventDefault();

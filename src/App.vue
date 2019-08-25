@@ -1,14 +1,7 @@
 <template>
   <div id="app">
     <b-navbar id="nav" toggleable="lg">
-      <b-navbar-brand href="#">VueCRUD</b-navbar-brand>
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-      <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav>
-          <b-nav-item><router-link to="/">Airlines</router-link></b-nav-item>
-          <b-nav-item><router-link to="/about">About</router-link></b-nav-item>
-        </b-navbar-nav>
-      </b-collapse>
+      <b-navbar-brand href="#">Vue<span class="highlight">CRUD</span></b-navbar-brand>
     </b-navbar>
     <router-view />
   </div>
@@ -22,8 +15,17 @@
   color: #2c3e50;
   min-width: 460px;
 }
+#nav {
+  background-color: #293041;
+}
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+.navbar-brand {
+  color: white !important;
+}
+.highlight {
+  color: #f138a4 !important;
 }
 i[disabled] {
   color: rgba(0, 0, 0, 0.1);
