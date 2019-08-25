@@ -16,6 +16,9 @@ This I left behind, and could be added as improvements:
 - Frontend pagination / Backend pagination.
 - Themes and theme selector for primary and secondary App colors (nothing to do with airplanes)
   - Be able to select an Airline and apply it's colors to the current app them
+- Add unit tests
+- Document e2e tests better
+- Integrate both unit and e2e tests with CircleCI
 
 ## Project setup
 

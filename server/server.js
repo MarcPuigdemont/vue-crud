@@ -121,6 +121,13 @@ app.delete('/airline', (req, res) => {
   }
 });
 
+app.post('/force', (req, res) => {
+  const data = req.body;
+  airlines = data;
+
+  res.send('Airlines list has been overriden');
+});
+
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`Airlines server is listening on port ${process.env.SERVER_PORT}!`);
 });
