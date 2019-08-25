@@ -17,8 +17,8 @@
     "secondary_color": "#f1c931",
     "services": {
       "bags": true,
-      "checkin": true,
-      "seats": true
+      "checkin": false,
+      "seats": false
     }
   }
 ]
