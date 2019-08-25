@@ -18,11 +18,17 @@
         <b-form-input id="input-4" v-model="form.secondary_color" type="color" required placeholder="Enter secondary color"></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-5" class="align-content-end w-50">
-        <b-form-checkbox-group v-model="form.services" id="checkboxes-1">
-          <b-form-checkbox value="bags">Bags</b-form-checkbox>
-          <b-form-checkbox value="checkin">Check-in</b-form-checkbox>
-          <b-form-checkbox value="seats">Seats</b-form-checkbox>
+      <b-form-group id="input-group-5" label="Services:" label-for="checkboxes-1" class="align-content-end w-50">
+        <b-form-checkbox-group v-model="form.services" id="checkboxes-1" class="ml-2">
+          <b-form-checkbox value="bags" title="Bags">
+            <i class="material-icons" :disabled="!form.services.find(s => s === 'bags')">{{ icons['BAGS'] }}</i>
+          </b-form-checkbox>
+          <b-form-checkbox value="checkin" title="Check-in">
+            <i class="material-icons" :disabled="!form.services.find(s => s === 'checkin')">{{ icons['CHECKIN'] }}</i>
+          </b-form-checkbox>
+          <b-form-checkbox value="seats" title="Seats">
+            <i class="material-icons" :disabled="!form.services.find(s => s === 'seats')">{{ icons['SEATS'] }}</i>
+          </b-form-checkbox>
         </b-form-checkbox-group>
       </b-form-group>
     </b-form-row>
@@ -54,6 +60,7 @@ export default {
         secondary_color: '#F138A4',
         services: [],
       },
+      icons: constants.ICONS,
     };
   },
   computed: {

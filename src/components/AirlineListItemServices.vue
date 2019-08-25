@@ -6,15 +6,12 @@
   </b-row>
 </template>
 <script>
-const icons = {
-  bags: 'work',
-  checkin: 'where_to_vote',
-  seats: 'airline_seat_recline_normal',
-};
+import constants from '@/constants';
+
 export default {
   props: { services: Array },
   methods: {
-    getIcon: serviceName => icons[serviceName] || 'error',
+    getIcon: serviceName => constants.ICONS[serviceName.toUpperCase()] || 'error',
   },
 };
 </script>

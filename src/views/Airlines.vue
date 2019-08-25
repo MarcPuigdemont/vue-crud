@@ -18,22 +18,25 @@
               :disabled="!filterServices.bags"
               title="Filter by Bags service available"
               @click="filterServices.bags = !filterServices.bags"
-              >work</i
             >
+              {{ icons['BAGS'] }}
+            </i>
             <i
               class="material-icons filter-button"
               :disabled="!filterServices.checkin"
               title="Filter by Check-in service available"
               @click="filterServices.checkin = !filterServices.checkin"
-              >where_to_vote</i
             >
+              {{ icons['CHECKIN'] }}
+            </i>
             <i
               class="material-icons filter-button"
               :disabled="!filterServices.seats"
               title="Filter by Seats service available"
               @click="filterServices.seats = !filterServices.seats"
-              >airline_seat_recline_normal</i
             >
+              {{ icons['SEATS'] }}
+            </i>
             <input
               v-model="searchFilter"
               class="form-control filter-form-search"
@@ -77,6 +80,7 @@ export default {
       selectedAirline: null,
       formVisible: false,
       searchFilter: '',
+      icons: constants.ICONS,
       filterServices: {
         bags: false,
         checkin: false,
@@ -150,6 +154,8 @@ export default {
 }
 .filter-button {
   margin-top: 0.5rem;
+  margin-right: 2px;
+  margin-left: 2px;
   cursor: pointer;
 }
 .fixed-alert {
