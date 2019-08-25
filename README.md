@@ -14,6 +14,9 @@ The coding style is based on Airbnb, but since it's using eslint + @vue/eslint-c
 npm install
 ```
 
+If you desire to change the server port (which defaults to 3000), please make sure to update the .env file AND the src/constants.js file.
+Frontend is not using the .env as it requires a bit more structure than a simple vue npm run serve.
+
 ### Server
 
 This project runs on a simple Backend done on node and express. It should be started on a separate terminal BEFORE running the Frontend.

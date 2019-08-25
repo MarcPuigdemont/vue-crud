@@ -9,8 +9,13 @@ const app = express();
 app.use(bodyParser.json());
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Headers, Access-Control-Allow-Methods, Access-Control-Allow-Origin',
+  );
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, HEAD');
+  res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+
   next();
 });
 
@@ -107,7 +112,7 @@ app.delete('/airline', (req, res) => {
     );
     if (foundAirline) {
       airlines = airlines.filter(
-        airline => airline.iata.toLowerCase() !== foundAirline.iata.toLowerCase() && airline.name.toLowerCase() !== foundAirline.name.toLowerCase(),
+        airline => airline.iata.toLowerCase() !== foundAirline.iata.toLowerCase() || airline.name.toLowerCase() !== foundAirline.name.toLowerCase(),
       );
       res.send('DELETE successful to /airline');
     } else {

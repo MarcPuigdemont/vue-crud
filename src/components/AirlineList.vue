@@ -1,6 +1,6 @@
 <template>
   <b-list-group class="w-100">
-    <AirlineListItem v-for="(airline, index) in airlines" :key="index" :airline="airline" />
+    <AirlineListItem v-for="(airline, index) in airlines" :key="index" :airline="airline" @edit="edit" />
   </b-list-group>
 </template>
 <script>
@@ -13,6 +13,11 @@ export default {
   },
   props: {
     airlines: Array,
+  },
+  methods: {
+    edit(airline) {
+      this.$emit('edit', airline);
+    },
   },
 };
 </script>

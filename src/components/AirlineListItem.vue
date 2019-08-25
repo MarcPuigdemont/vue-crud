@@ -1,5 +1,5 @@
 <template>
-  <b-list-group-item class="flex-column align-items-start">
+  <b-list-group-item class="flex-column align-items-start" style="cursor: pointer" @click="$emit('edit', airline)">
     <b-row>
       <b-col>
         {{ airline.iata }}
@@ -7,11 +7,11 @@
       <b-col>
         {{ airline.name }}
       </b-col>
-      <b-col>
-        {{ airline.primary_color }}
+      <b-col :title="airline.primary_color">
+        <div :style="{ 'background-color': airline.primary_color }" class="h-100" />
       </b-col>
-      <b-col>
-        {{ airline.secondary_color }}
+      <b-col :title="airline.secondary_color">
+        <div :style="{ 'background-color': airline.secondary_color }" class="h-100" />
       </b-col>
       <b-col>
         <AirlineListItemServices :services="servicesList" />
