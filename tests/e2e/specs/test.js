@@ -7,8 +7,11 @@ describe('CRUD tests', () => {
   it('Visits the app root url', () => {
     cy.visit('http://localhost:8080/');
     cy.contains('h1', 'Airline List');
+    // There should be 5 airlines
     cy.get('.list-group-item > .row').should('have.length', 5);
+    // Switch to grid
     cy.contains('.display_button', 'view_module').click();
+    // There should still be 5 airlines
     cy.get('.airline-card').should('have.length', 5);
   });
 

@@ -17,8 +17,10 @@ This I left behind, and could be added as improvements:
 - Themes and theme selector for primary and secondary App colors (nothing to do with airplanes)
   - Be able to select an Airline and apply it's colors to the current app them
 - Add unit tests
-- Document e2e tests better
+- Document e2e tests so it's easier to know what each part of the test does
+- Also, decouple e2e from icons and classes by using other selectors such as data-\*
 - Integrate both unit and e2e tests with CircleCI
+- Improve style and add animations
 
 ## Project setup
 
@@ -65,12 +67,6 @@ npm run serve
 npm run build
 ```
 
-### Run your tests
-
-```
-npm run test
-```
-
 ### Lints and fixes files
 
 ```
@@ -81,12 +77,6 @@ npm run lint
 
 ```
 npm run test:e2e
-```
-
-### Run your unit tests
-
-```
-npm run test:unit
 ```
 
 ### Customize configuration
