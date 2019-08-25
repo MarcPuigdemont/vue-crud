@@ -12,7 +12,36 @@
 
         <div class="d-flex justify-content-between my-3 my-lg-3">
           <b-button pill variant="success" class="add_button"><i class="material-icons" @click="create">add</i></b-button>
-          <input class="form-control filter-form-search" type="search" placeholder="Search" aria-label="Search" />
+          <div class="d-flex flex-direction-row">
+            <i
+              class="material-icons filter-button"
+              :disabled="!filterServices.bags"
+              title="Filter by Bags service available"
+              @click="filterServices.bags = !filterServices.bags"
+              >work</i
+            >
+            <i
+              class="material-icons filter-button"
+              :disabled="!filterServices.checkin"
+              title="Filter by Check-in service available"
+              @click="filterServices.checkin = !filterServices.checkin"
+              >where_to_vote</i
+            >
+            <i
+              class="material-icons filter-button"
+              :disabled="!filterServices.seats"
+              title="Filter by Seats service available"
+              @click="filterServices.seats = !filterServices.seats"
+              >airline_seat_recline_normal</i
+            >
+            <input
+              v-model="searchFilter"
+              class="form-control filter-form-search"
+              type="search"
+              placeholder="Search/Filter"
+              aria-label="Search/Filter"
+            />
+          </div>
         </div>
       </b-col>
     </b-row>
@@ -20,7 +49,7 @@
       <AirlineForm v-if="formVisible" :action="action" :entity="selectedAirline" class="mb-4 w-75" @refresh="fetchList" @close="close" />
     </b-row>
     <b-row no-gutters>
-      <AirlineList :airlines="airlines" @edit="edit" />
+      <AirlineList :airlines="airlines" :filter="searchFilter" :service-filter="activeFilterServices" @edit="edit" />
     </b-row>
   </b-container>
 </template>
@@ -44,7 +73,18 @@ export default {
       action: 'create',
       selectedAirline: null,
       formVisible: false,
+      searchFilter: '',
+      filterServices: {
+        bags: false,
+        checkin: false,
+        seats: false,
+      },
     };
+  },
+  computed: {
+    activeFilterServices() {
+      return Object.keys(this.filterServices).filter(key => this.filterServices[key]) || [];
+    },
   },
   mounted() {
     this.fetchList();
@@ -96,5 +136,9 @@ export default {
 }
 .filter-form-search {
   max-width: 200px;
+}
+.filter-button {
+  margin-top: 0.5rem;
+  cursor: pointer;
 }
 </style>

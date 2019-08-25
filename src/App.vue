@@ -24,4 +24,7 @@
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+i[disabled] {
+  color: rgba(0, 0, 0, 0.1);
+}
 </style>

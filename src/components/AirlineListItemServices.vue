@@ -18,8 +18,3 @@ export default {
   },
 };
 </script>
-<style scoped>
-i[disabled] {
-  color: rgba(0, 0, 0, 0.1);
-}
-</style>
