@@ -67,9 +67,12 @@ export default {
     }
   },
   methods: {
-    notifySuccess() {
-      this.$emit('refresh');
+    notifySuccess(reason) {
+      this.$emit('refresh', { result: 'success', message: reason });
       this.$emit('close');
+    },
+    notifyError(reason) {
+      this.$emit('refresh', { result: 'error', message: reason });
     },
     onSubmit(evt) {
       evt.preventDefault();
@@ -82,23 +85,33 @@ export default {
 
       // Before spread operator: Object.assign({}, this.form, { services })
       const airline = { ...this.form, ...{ services } };
-      const notify = this.notifySuccess.bind(this);
 
       if (this.action.toLowerCase() === 'update') {
+        const notify = this.notifySuccess.bind(this, 'An Airline has been updated');
         if (airline.iata === this.entity.iata && airline.name === this.entity.name) {
-          axios.put(`${constants.SERVER_URL}/airline`, airline).then(notify);
+          axios
+            .put(`${constants.SERVER_URL}/airline`, airline)
+            .then(notify)
+            .catch(() => this.notifyError('Error updating the airline'));
         } else {
           axios
             .post(`${constants.SERVER_URL}/airline`, airline)
             .then(() => axios.delete(`${constants.SERVER_URL}/airline`, { data: { iata: this.entity.iata, name: this.entity.name } }))
-            .then(notify);
+            .then(notify)
+            .catch(() => this.notifyError('Error updating the airline. Check that no other airline with same iata/name combination exists'));
         }
       } else {
-        axios.post(`${constants.SERVER_URL}/airline`, airline).then(notify);
+        axios
+          .post(`${constants.SERVER_URL}/airline`, airline)
+          .then(() => this.notifySuccess('A new Airline has been created'))
+          .catch(() => this.notifyError('Error creating the airline. Check that no other airline with same iata/name combination exists'));
       }
     },
     deleteEntity() {
-      axios.delete(`${constants.SERVER_URL}/airline`, { data: { iata: this.entity.iata, name: this.entity.name } }).then(() => this.notifySuccess());
+      axios
+        .delete(`${constants.SERVER_URL}/airline`, { data: { iata: this.entity.iata, name: this.entity.name } })
+        .then(() => this.notifySuccess('An Airline has been removed'))
+        .catch(e => this.notifyError('Error deleting the airline'));
     },
     onReset(evt) {
       evt.preventDefault();

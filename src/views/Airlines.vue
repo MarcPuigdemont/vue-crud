@@ -51,6 +51,9 @@
     <b-row no-gutters>
       <AirlineList :airlines="airlines" :filter="searchFilter" :service-filter="activeFilterServices" @edit="edit" />
     </b-row>
+    <b-alert class="fixed-alert" :show="alertDismissCountDown" dismissible :variant="alertVariant" @dismissed="alertDismissCountDown = 0">
+      {{ alertMessage }}
+    </b-alert>
   </b-container>
 </template>
 
@@ -79,6 +82,9 @@ export default {
         checkin: false,
         seats: false,
       },
+      alertDismissCountDown: 0,
+      alertMessage: '',
+      alertVariant: 'success',
     };
   },
   computed: {
@@ -90,8 +96,13 @@ export default {
     this.fetchList();
   },
   methods: {
-    fetchList() {
+    fetchList(reason) {
       axios.get(`${constants.SERVER_URL}/airlines`).then(response => (this.airlines = response.data));
+      if (reason) {
+        this.alertMessage = reason.message;
+        this.alertVariant = reason.result === 'success' ? 'success' : 'danger';
+        this.alertDismissCountDown = 10;
+      }
     },
     close() {
       this.formVisible = false;
@@ -140,5 +151,14 @@ export default {
 .filter-button {
   margin-top: 0.5rem;
   cursor: pointer;
+}
+.fixed-alert {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  text-align: center;
+  margin-bottom: 0;
+  border-radius: 0;
 }
 </style>
