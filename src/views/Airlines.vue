@@ -9,43 +9,7 @@
         </b-button-group>
 
         <div class="border-top my-3"></div>
-
-        <div class="d-flex justify-content-between my-3 my-lg-3">
-          <b-button pill class="add_button" @click="create"><i class="material-icons">add</i></b-button>
-          <div class="d-flex flex-direction-row">
-            <i
-              class="material-icons filter-button"
-              :disabled="!filterServices.bags"
-              title="Filter by Bags service available"
-              @click="filterServices.bags = !filterServices.bags"
-            >
-              {{ icons['BAGS'] }}
-            </i>
-            <i
-              class="material-icons filter-button"
-              :disabled="!filterServices.checkin"
-              title="Filter by Check-in service available"
-              @click="filterServices.checkin = !filterServices.checkin"
-            >
-              {{ icons['CHECKIN'] }}
-            </i>
-            <i
-              class="material-icons filter-button"
-              :disabled="!filterServices.seats"
-              title="Filter by Seats service available"
-              @click="filterServices.seats = !filterServices.seats"
-            >
-              {{ icons['SEATS'] }}
-            </i>
-            <input
-              v-model="searchFilter"
-              class="form-control filter-form-search"
-              type="search"
-              placeholder="Search/Filter"
-              aria-label="Search/Filter"
-            />
-          </div>
-        </div>
+        <Toolbar class="my-3 my-lg-3" @create="create" @filter="search" @service-filter="serviceFilter"></Toolbar>
       </b-col>
     </b-row>
     <b-row v-if="formVisible" no-gutters class="justify-content-center">
@@ -75,12 +39,14 @@ import axios from 'axios';
 import AirlineForm from '@/components/AirlineForm.vue';
 import AirlineList from '@/components/AirlineList.vue';
 import AirlineGrid from '@/components/AirlineGrid.vue';
+import Toolbar from '@/components/Toolbar.vue';
 import constants from '@/constants';
 
 export default {
   name: 'Airlines',
   components: {
     AirlineForm,
+    Toolbar,
   },
   data() {
     return {
@@ -88,17 +54,14 @@ export default {
       action: 'create',
       selectedAirline: null,
       formVisible: false,
+      displayMode: 'list',
+
       searchFilter: '',
-      icons: constants.ICONS,
-      filterServices: {
-        bags: false,
-        checkin: false,
-        seats: false,
-      },
+      filterServices: {},
+
       alertDismissCountDown: 0,
       alertMessage: '',
       alertVariant: 'success',
-      displayMode: 'list',
     };
   },
   computed: {
@@ -134,6 +97,12 @@ export default {
       this.selectedAirline = airline;
       this.formVisible = true;
     },
+    search(filter) {
+      this.searchFilter = filter;
+    },
+    serviceFilter(filter) {
+      this.filterServices = filter;
+    },
   },
 };
 </script>
@@ -149,29 +118,6 @@ export default {
 .display_button:focus {
   outline: none;
   box-shadow: none;
-}
-.add_button {
-  height: 38px;
-  width: 38px;
-  position: relative;
-  outline: none !important;
-  box-shadow: none !important;
-  background-color: #293041;
-  border-color: #293041;
-}
-.add_button i {
-  position: absolute;
-  top: 6px;
-  left: 6px;
-}
-.filter-form-search {
-  max-width: 200px;
-}
-.filter-button {
-  margin-top: 0.5rem;
-  margin-right: 2px;
-  margin-left: 2px;
-  cursor: pointer;
 }
 .fixed-alert {
   position: fixed;
