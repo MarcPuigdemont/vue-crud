@@ -76,11 +76,11 @@ export default {
   },
   methods: {
     notifySuccess(reason) {
-      this.$emit('refresh', { result: 'success', message: reason });
+      this.$emit('notify', { result: 'success', message: reason });
       this.$emit('close');
     },
     notifyError(reason) {
-      this.$emit('refresh', { result: 'error', message: reason });
+      this.$emit('notify', { result: 'error', message: reason });
     },
     onSubmit(evt) {
       evt.preventDefault();

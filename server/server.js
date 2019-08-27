@@ -6,6 +6,15 @@ const fs = require('fs');
 require('dotenv').config();
 
 const app = express();
+require('express-ws')(app);
+
+/** Websockets for live update */
+const clients = new Set();
+
+const notifyClients = () => {
+  clients.forEach(client => client.send('refresh'));
+};
+
 app.use(bodyParser.json());
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -62,6 +71,7 @@ app.get('/airlines', (req, res) => {
 app.get('/reset', (req, res) => {
   reset();
   res.json(airlines);
+  notifyClients();
 });
 
 app.post('/airline', (req, res) => {
@@ -79,6 +89,7 @@ app.post('/airline', (req, res) => {
 
       airlines.push(airline);
       res.send('POST successful to /airline');
+      notifyClients();
     }
   }
 });
@@ -96,6 +107,7 @@ app.put('/airline', (req, res) => {
 
       Object.assign(foundAirline, airline);
       res.send('PUT successful to /airline');
+      notifyClients();
     } else {
       res.status(400).send('Trying to update an unexisting airline, please use POST method if you want to create it instead');
     }
@@ -115,6 +127,7 @@ app.delete('/airline', (req, res) => {
         airline => airline.iata.toLowerCase() !== foundAirline.iata.toLowerCase() || airline.name.toLowerCase() !== foundAirline.name.toLowerCase(),
       );
       res.send('DELETE successful to /airline');
+      notifyClients();
     } else {
       res.status(400).send('Trying to delete an unexisting airline');
     }
@@ -126,6 +139,16 @@ app.post('/force', (req, res) => {
   airlines = data;
 
   res.send('Airlines list has been overriden');
+  notifyClients();
+});
+
+app.ws('/subscribe', ws => {
+  clients.add(ws);
+
+  ws.on('close', function() {
+    clients.delete(ws);
+    console.log(clients.size);
+  });
 });
 
 app.listen(process.env.SERVER_PORT, () => {

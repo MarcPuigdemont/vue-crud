@@ -19,7 +19,7 @@
           :entity="selectedAirline"
           :style="{ 'max-height': formVisible ? '300px' : '0px' }"
           class="mb-2"
-          @refresh="fetchList"
+          @notify="notifyAlert"
           @close="close"
         />
       </div>
@@ -50,6 +50,7 @@ export default {
   },
   data() {
     return {
+      socket: null,
       airlines: [],
       action: 'create',
       selectedAirline: null,
@@ -74,10 +75,25 @@ export default {
   },
   mounted() {
     this.fetchList();
+    this.socket = new WebSocket(constants.WEBSOCKET_URL);
+    this.socket.onmessage = event => {
+      if (event.data === 'refresh') {
+        this.fetchList();
+        if (this.formVisible && this.action === 'update') {
+          this.notifyAlert({ result: 'error', message: 'List has changed while you are editing, proceed at your own risk' });
+        }
+      }
+    };
+  },
+  beforeDestroy() {
+    console.log('Socket closed');
+    this.socket.close();
   },
   methods: {
-    fetchList(reason) {
+    fetchList() {
       axios.get(`${constants.SERVER_URL}/airlines`).then(response => (this.airlines = response.data));
+    },
+    notifyAlert(reason) {
       if (reason) {
         this.alertMessage = reason.message;
         this.alertVariant = reason.result === 'success' ? 'success' : 'danger';
