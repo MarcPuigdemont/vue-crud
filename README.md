@@ -50,6 +50,10 @@ The API offers:
 - PUT /airline with a json body with the desired modified data of an existing airline to update it
 - DELETE /airline with a json body with 'iata' and 'name' properties to delete the desired airline
 
+Realtime data update:
+
+- WS /subscribe connect via websocket to this endpoint to receive websocket events when data changes
+
 Finally to reset to the default airlines from the template or to set your own airlines (used for e2e testing), use:
 
 - GET /reset
