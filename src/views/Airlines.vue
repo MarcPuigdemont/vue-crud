@@ -75,21 +75,30 @@ export default {
   },
   mounted() {
     this.fetchList();
-    this.socket = new WebSocket(constants.WEBSOCKET_URL);
-    this.socket.onmessage = event => {
-      if (event.data === 'refresh') {
-        this.fetchList();
-        if (this.formVisible && this.action === 'update') {
-          this.notifyAlert({ result: 'error', message: 'List has changed while you are editing, proceed at your own risk' });
-        }
-      }
-    };
+    this.connect();
   },
   beforeDestroy() {
-    console.log('Socket closed');
     this.socket.close();
   },
   methods: {
+    connect() {
+      this.socket = new WebSocket(constants.WEBSOCKET_URL);
+      this.socket.onmessage = event => {
+        if (event.data === 'refresh') {
+          this.fetchList();
+          if (this.formVisible && this.action === 'update') {
+            this.notifyAlert({ result: 'error', message: 'List has changed while you are editing, proceed at your own risk' });
+          }
+        }
+      };
+      this.socket.onclose = event => {
+        if (!event.wasClean) {
+          setTimeout(() => {
+            this.connect();
+          }, 5000);
+        }
+      };
+    },
     fetchList() {
       axios.get(`${constants.SERVER_URL}/airlines`).then(response => (this.airlines = response.data));
     },

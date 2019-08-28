@@ -147,7 +147,7 @@ app.ws('/subscribe', ws => {
 
   ws.on('close', function() {
     clients.delete(ws);
-    console.log(clients.size);
+    console.log('Active clinets: ', clients.size);
   });
 });
 
