@@ -1,11 +1,12 @@
 <template>
   <div class="d-flex justify-content-between">
-    <b-button pill class="add_button" @click="$emit('create')"><i class="material-icons">add</i></b-button>
+    <b-button pill class="add_button" data-test="new-airline-button" @click="$emit('create')"><i class="material-icons">add</i></b-button>
     <div class="d-flex flex-direction-row">
       <i
         class="material-icons filter-button"
         :disabled="!filterServices.bags"
         title="Filter by Bags service available"
+        data-test="filter-bags"
         @click="toggleService('bags')"
       >
         {{ icons['BAGS'] }}
@@ -14,6 +15,7 @@
         class="material-icons filter-button"
         :disabled="!filterServices.checkin"
         title="Filter by Check-in service available"
+        data-test="filter-checkin"
         @click="toggleService('checkin')"
       >
         {{ icons['CHECKIN'] }}
@@ -22,11 +24,19 @@
         class="material-icons filter-button"
         :disabled="!filterServices.seats"
         title="Filter by Seats service available"
+        data-test="filter-seats"
         @click="toggleService('seats')"
       >
         {{ icons['SEATS'] }}
       </i>
-      <input v-model="searchFilter" class="form-control filter-form-search" type="search" placeholder="Search/Filter" aria-label="Search/Filter" />
+      <input
+        v-model="searchFilter"
+        class="form-control filter-form-search"
+        type="search"
+        placeholder="Search/Filter"
+        aria-label="Search/Filter"
+        data-test="filter-input"
+      />
     </div>
   </div>
 </template>

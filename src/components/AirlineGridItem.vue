@@ -1,10 +1,9 @@
 <template>
-  <b-card :title="airline.name" :sub-title="airline.iata" class="airline-card" @click="$emit('edit', airline)">
+  <b-card :title="airline.name" :sub-title="airline.iata" class="airline-card" data-test="airline-card" @click="$emit('edit', airline)">
     <b-row no-gutters>
       <div :style="{ 'background-color': airline.primary_color }" class="airline-card__color w-50" />
       <div :style="{ 'background-color': airline.secondary_color }" class="airline-card__color w-50" />
     </b-row>
-
     <AirlineListItemServices :services="servicesList" />
   </b-card>
 </template>

@@ -1,10 +1,10 @@
 <template>
-  <b-list-group-item class="flex-column align-items-start" style="cursor: pointer" @click="$emit('edit', airline)">
+  <b-list-group-item class="flex-column align-items-start" style="cursor: pointer" data-test="list-row" @click="$emit('edit', airline)">
     <b-row>
-      <b-col>
+      <b-col data-test="list-row-iata">
         {{ airline.iata }}
       </b-col>
-      <b-col>
+      <b-col data-test="list-row-name">
         {{ airline.name }}
       </b-col>
       <b-col :title="airline.primary_color">

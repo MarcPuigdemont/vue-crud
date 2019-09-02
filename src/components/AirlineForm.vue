@@ -2,13 +2,13 @@
   <b-form @submit="$event.preventDefault()" @reset="$event.preventDefault()" class="mx-2 airline-form">
     <b-form-row>
       <b-form-group id="input-group-1" label="IATA:" label-for="input-1" class="w-50 pr-1">
-        <b-form-input id="input-1" v-model="form.iata" required placeholder="Enter IATA code" />
+        <b-form-input id="input-1" v-model="form.iata" required placeholder="Enter IATA code" data-test="form-iata-input" />
         <b-form-invalid-feedback :state="form.iata.length > 0">
           IATA must be filled
         </b-form-invalid-feedback>
       </b-form-group>
       <b-form-group id="input-group-2" label="Airline Name:" label-for="input-2" class="w-50 pl-1">
-        <b-form-input id="input-2" v-model="form.name" required placeholder="Enter airline name" />
+        <b-form-input id="input-2" v-model="form.name" required placeholder="Enter airline name" data-test="form-name-input" />
         <b-form-invalid-feedback :state="form.name.length > 0">
           Name must be filled
         </b-form-invalid-feedback>
@@ -26,13 +26,19 @@
       <b-form-group id="input-group-5" label="Services:" label-for="checkboxes-1" class="align-content-end w-50">
         <b-form-checkbox-group v-model="form.services" id="checkboxes-1" class="ml-2">
           <b-form-checkbox value="bags">
-            <i class="material-icons" title="Bags" :disabled="!form.services.find(s => s === 'bags')">{{ icons['BAGS'] }}</i>
+            <i class="material-icons" title="Bags" :disabled="!form.services.find(s => s === 'bags')" data-test="form-bags-checkbox">
+              {{ icons['BAGS'] }}
+            </i>
           </b-form-checkbox>
           <b-form-checkbox value="checkin">
-            <i class="material-icons" title="Check-in" :disabled="!form.services.find(s => s === 'checkin')">{{ icons['CHECKIN'] }}</i>
+            <i class="material-icons" title="Check-in" :disabled="!form.services.find(s => s === 'checkin')" data-test="form-checkin-checkbox">
+              {{ icons['CHECKIN'] }}
+            </i>
           </b-form-checkbox>
           <b-form-checkbox value="seats">
-            <i class="material-icons" title="Seats" :disabled="!form.services.find(s => s === 'seats')">{{ icons['SEATS'] }}</i>
+            <i class="material-icons" title="Seats" :disabled="!form.services.find(s => s === 'seats')" data-test="form-seats-checkbox">
+              {{ icons['SEATS'] }}
+            </i>
           </b-form-checkbox>
         </b-form-checkbox-group>
       </b-form-group>

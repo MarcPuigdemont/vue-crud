@@ -2,10 +2,12 @@
   <b-container class="pt-3">
     <b-row no-gutters>
       <b-col>
-        <h1>Airline List</h1>
+        <h1 data-test="title">Airline List</h1>
         <b-button-group class="display_buttons">
           <b-button variant="light" class="display_button" @click="displayMode = 'list'"><i class="material-icons">view_headline</i></b-button>
-          <b-button variant="light" class="display_button" @click="displayMode = 'grid'"><i class="material-icons">view_module</i></b-button>
+          <b-button variant="light" class="display_button" @click="displayMode = 'grid'" data-test="grid-view">
+            <i class="material-icons">view_module</i>
+          </b-button>
         </b-button-group>
         <div class="border-top my-3"></div>
         <Toolbar class="my-3 my-lg-3" @create="openForm()" @filter="search" @service-filter="serviceFilter"></Toolbar>
@@ -14,17 +16,33 @@
     <b-row no-gutters>
       <component :is="dynamicComponent" :airlines="airlines" :filter="searchFilter" :service-filter="activeFilterServices" @edit="openForm" />
     </b-row>
-    <b-alert class="fixed-alert" :show="alertDismissCountDown" dismissible :variant="alertVariant" @dismissed="alertDismissCountDown = 0">
+    <b-alert
+      class="fixed-alert"
+      :show="alertDismissCountDown"
+      dismissible
+      :variant="alertVariant"
+      data-test="alert"
+      @dismissed="alertDismissCountDown = 0"
+    >
       {{ alertMessage }}
     </b-alert>
     <b-modal v-if="formVisible" @hidden="closeForm" :visible="formVisible" :title="action" :centered="true" size="lg">
       <AirlineForm :action="action" :entity="selectedAirline" class="mb-2" @entityUpdated="updateEntity" @validate="validateForm" />
       <template #modal-footer>
-        <b-button :disabled="!formValid" variant="primary" class="mx-1 crud-form-button" @click="createAirline">{{ createButtonText }}</b-button>
-        <b-button v-if="action === 'update'" :disabled="!formValid" variant="danger" class="mx-1 crud-form-button" @click="deleteAirline">
+        <b-button :disabled="!formValid" variant="primary" class="mx-1 crud-form-button" data-test="button-create" @click="createAirline">
+          {{ createButtonText }}
+        </b-button>
+        <b-button
+          v-if="action === 'update'"
+          :disabled="!formValid"
+          variant="danger"
+          class="mx-1 crud-form-button"
+          data-test="button-delete"
+          @click="deleteAirline"
+        >
           Delete
         </b-button>
-        <b-button class="ml-1 crud-form-button" @click="closeForm">Close</b-button>
+        <b-button class="ml-1 crud-form-button" data-test="button-cancel" @click="closeForm">Close</b-button>
       </template>
     </b-modal>
   </b-container>

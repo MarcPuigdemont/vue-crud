@@ -1,7 +1,9 @@
 <template>
   <b-row>
     <b-col v-for="service in services" :key="service.name">
-      <i class="material-icons" :title="service.name" :disabled="!service.available">{{ getIcon(service.name) }}</i>
+      <i class="material-icons" :title="service.name" :disabled="!service.available" :data-test="`list-row-service-${service.name}`">
+        {{ getIcon(service.name) }}
+      </i>
     </b-col>
   </b-row>
 </template>
