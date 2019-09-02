@@ -1,5 +1,5 @@
 <template>
-  <b-form @submit="onSubmit" @reset="onReset">
+  <b-form @submit="onSubmit" @reset="onReset" class="mx-2 airline-form">
     <b-form-row>
       <b-form-group id="input-group-1" label="IATA:" label-for="input-1" class="w-50 pr-1">
         <b-form-input id="input-1" v-model="form.iata" required placeholder="Enter IATA code"></b-form-input>
@@ -10,11 +10,11 @@
       </b-form-group>
     </b-form-row>
     <b-form-row>
-      <b-form-group id="input-group-3" label="Primary Color:" label-for="input-3" class="w-25 pr-1">
+      <b-form-group id="input-group-3" label="Primary Color:" label-for="input-3" label-class="crud-form-label" class="w-25 pr-1">
         <b-form-input id="input-3" v-model="form.primary_color" type="color" required placeholder="Enter primary color"></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-4" label="Secondary Color:" label-for="input-4" class="w-25 px-1">
+      <b-form-group id="input-group-4" label="Secondary Color:" label-for="input-4" label-class="crud-form-label" class="w-25 px-1">
         <b-form-input id="input-4" v-model="form.secondary_color" type="color" required placeholder="Enter secondary color"></b-form-input>
       </b-form-group>
 
@@ -32,10 +32,10 @@
         </b-form-checkbox-group>
       </b-form-group>
     </b-form-row>
-    <b-form-row class="justify-content-center">
-      <b-button type="submit" variant="primary" class="mx-1">{{ createButtonText }}</b-button>
-      <b-button v-if="action.toLowerCase() === 'update'" variant="danger" class="mx-1" @click="deleteEntity">Delete</b-button>
-      <b-button type="reset" class="mx-1">Close</b-button>
+    <b-form-row class="justify-content-end crud-form-border-top">
+      <b-button type="submit" variant="primary" class="mx-1 crud-form-button">{{ createButtonText }}</b-button>
+      <b-button v-if="action.toLowerCase() === 'update'" variant="danger" class="mx-1 crud-form-button" @click="deleteEntity">Delete</b-button>
+      <b-button type="reset" class="ml-1 crud-form-button">Close</b-button>
     </b-form-row>
   </b-form>
 </template>
@@ -155,3 +155,22 @@ export default {
   },
 };
 </script>
+<style>
+.crud-form-label {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+</style>
+<style scoped>
+.crud-form-border-top {
+  border-top: 1px solid #dee2e6;
+  padding-top: 20px;
+  padding-right: 16px;
+  margin-left: -24px;
+  margin-right: -24px;
+}
+.crud-form-button {
+  min-width: 70px;
+}
+</style>
