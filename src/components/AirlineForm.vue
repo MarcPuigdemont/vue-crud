@@ -2,11 +2,16 @@
   <b-form @submit="$event.preventDefault()" @reset="$event.preventDefault()" class="mx-2 airline-form">
     <b-form-row>
       <b-form-group id="input-group-1" label="IATA:" label-for="input-1" class="w-50 pr-1">
-        <b-form-input id="input-1" v-model="form.iata" required placeholder="Enter IATA code"></b-form-input>
+        <b-form-input id="input-1" v-model="form.iata" required placeholder="Enter IATA code" />
+        <b-form-invalid-feedback :state="form.iata.length > 0">
+          IATA must be filled
+        </b-form-invalid-feedback>
       </b-form-group>
-
       <b-form-group id="input-group-2" label="Airline Name:" label-for="input-2" class="w-50 pl-1">
-        <b-form-input id="input-2" v-model="form.name" required placeholder="Enter airline name"></b-form-input>
+        <b-form-input id="input-2" v-model="form.name" required placeholder="Enter airline name" />
+        <b-form-invalid-feedback :state="form.name.length > 0">
+          Name must be filled
+        </b-form-invalid-feedback>
       </b-form-group>
     </b-form-row>
     <b-form-row>
@@ -58,6 +63,11 @@ export default {
       icons: constants.ICONS,
     };
   },
+  computed: {
+    isValid() {
+      return !!(this.form.iata && this.form.name);
+    },
+  },
   mounted() {
     if (this.entity) {
       this.updateFormFromEntity(this.entity);
@@ -102,6 +112,12 @@ export default {
         this.$emit('entityUpdated', this.enitityUpdated());
       },
       deep: true,
+    },
+    isValid: {
+      handler: function() {
+        this.$emit('validate', this.isValid);
+      },
+      immediate: true,
     },
   },
 };

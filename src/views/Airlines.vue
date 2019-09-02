@@ -18,10 +18,12 @@
       {{ alertMessage }}
     </b-alert>
     <b-modal v-if="formVisible" @hidden="closeForm" :visible="formVisible" :title="action" :centered="true" size="lg">
-      <AirlineForm :action="action" :entity="selectedAirline" class="mb-2" @entityUpdated="updateEntity" />
+      <AirlineForm :action="action" :entity="selectedAirline" class="mb-2" @entityUpdated="updateEntity" @validate="validateForm" />
       <template #modal-footer>
-        <b-button variant="primary" class="mx-1 crud-form-button" @click="createAirline">{{ createButtonText }}</b-button>
-        <b-button v-if="action.toLowerCase() === 'update'" variant="danger" class="mx-1 crud-form-button" @click="deleteAirline">Delete</b-button>
+        <b-button :disabled="!formValid" variant="primary" class="mx-1 crud-form-button" @click="createAirline">{{ createButtonText }}</b-button>
+        <b-button v-if="action === 'update'" :disabled="!formValid" variant="danger" class="mx-1 crud-form-button" @click="deleteAirline">
+          Delete
+        </b-button>
         <b-button class="ml-1 crud-form-button" @click="closeForm">Close</b-button>
       </template>
     </b-modal>
@@ -53,6 +55,7 @@ export default {
       displayMode: 'list',
 
       formEntity: null,
+      formValid: false,
 
       searchFilter: '',
       filterServices: {},
@@ -67,7 +70,7 @@ export default {
       return Object.keys(this.filterServices).filter(key => this.filterServices[key]) || [];
     },
     createButtonText() {
-      return this.action.toLowerCase() === 'create' ? 'Create' : 'Edit';
+      return this.action === 'create' ? 'Create' : 'Edit';
     },
     dynamicComponent() {
       return this.displayMode === 'list' ? AirlineList : AirlineGrid;
@@ -126,9 +129,9 @@ export default {
     },
     createAirline() {
       const airline = this.formEntity;
-      if (!airline || !airline.iata || !airline.name) {
+      if (!this.formValid) {
         this.notifyAlert({ status: 'error', message: 'Airline must have iata and name' });
-      } else if (this.action.toLowerCase() === 'create') {
+      } else if (this.action === 'create') {
         AirlinesProxy.addAirline(airline)
           .then(message => {
             this.notifyAlert(message);
@@ -155,6 +158,9 @@ export default {
     },
     updateEntity(entity) {
       this.formEntity = entity;
+    },
+    validateForm(valid) {
+      this.formValid = valid;
     },
     search(filter) {
       this.searchFilter = filter;
