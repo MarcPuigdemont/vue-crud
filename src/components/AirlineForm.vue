@@ -1,5 +1,5 @@
 <template>
-  <b-form @submit="onSubmit" @reset="onReset" class="mx-2 airline-form">
+  <b-form @submit="$event.preventDefault()" @reset="$event.preventDefault()" class="mx-2 airline-form">
     <b-form-row>
       <b-form-group id="input-group-1" label="IATA:" label-for="input-1" class="w-50 pr-1">
         <b-form-input id="input-1" v-model="form.iata" required placeholder="Enter IATA code"></b-form-input>
@@ -32,15 +32,9 @@
         </b-form-checkbox-group>
       </b-form-group>
     </b-form-row>
-    <b-form-row class="justify-content-end crud-form-border-top">
-      <b-button type="submit" variant="primary" class="mx-1 crud-form-button">{{ createButtonText }}</b-button>
-      <b-button v-if="action.toLowerCase() === 'update'" variant="danger" class="mx-1 crud-form-button" @click="deleteEntity">Delete</b-button>
-      <b-button type="reset" class="ml-1 crud-form-button">Close</b-button>
-    </b-form-row>
   </b-form>
 </template>
 <script>
-import axios from 'axios';
 import constants from '@/constants';
 
 export default {
@@ -64,26 +58,13 @@ export default {
       icons: constants.ICONS,
     };
   },
-  computed: {
-    createButtonText() {
-      return this.action.toLowerCase() === 'create' ? 'Create' : 'Edit';
-    },
-  },
   mounted() {
     if (this.entity) {
       this.updateFormFromEntity(this.entity);
     }
   },
   methods: {
-    notifySuccess(reason) {
-      this.$emit('notify', { result: 'success', message: reason });
-      this.$emit('close');
-    },
-    notifyError(reason) {
-      this.$emit('notify', { result: 'error', message: reason });
-    },
-    onSubmit(evt) {
-      evt.preventDefault();
+    enitityUpdated() {
       const services = {
         bags: false,
         checkin: false,
@@ -92,43 +73,7 @@ export default {
       this.form.services.forEach(s => (services[s] = true));
 
       // Before spread operator: Object.assign({}, this.form, { services })
-      const airline = { ...this.form, ...{ services } };
-
-      if (this.action.toLowerCase() === 'update') {
-        const notify = this.notifySuccess.bind(this, 'An Airline has been updated');
-        if (airline.iata === this.entity.iata && airline.name === this.entity.name) {
-          axios
-            .put(`${constants.SERVER_URL}/airline`, airline)
-            .then(notify)
-            .catch(() => this.notifyError('Error updating the airline'));
-        } else {
-          axios
-            .post(`${constants.SERVER_URL}/airline`, airline)
-            .then(() => axios.delete(`${constants.SERVER_URL}/airline`, { data: { iata: this.entity.iata, name: this.entity.name } }))
-            .then(notify)
-            .catch(() => this.notifyError('Error updating the airline. Check that no other airline with same iata/name combination exists'));
-        }
-      } else {
-        axios
-          .post(`${constants.SERVER_URL}/airline`, airline)
-          .then(() => this.notifySuccess('A new Airline has been created'))
-          .catch(() => this.notifyError('Error creating the airline. Check that no other airline with same iata/name combination exists'));
-      }
-    },
-    deleteEntity() {
-      axios
-        .delete(`${constants.SERVER_URL}/airline`, { data: { iata: this.entity.iata, name: this.entity.name } })
-        .then(() => this.notifySuccess('An Airline has been removed'))
-        .catch(() => this.notifyError('Error deleting the airline'));
-    },
-    onReset(evt) {
-      evt.preventDefault();
-      this.form.iata = '';
-      this.form.name = '';
-      this.form.primary_color = '#293041';
-      this.form.secondary_color = '#F138A4';
-      this.form.services = [];
-      this.$emit('close');
+      return { ...this.form, ...{ services } };
     },
     updateFormFromEntity(airline) {
       const expandColor = color =>
@@ -152,6 +97,12 @@ export default {
     entity() {
       this.updateFormFromEntity(this.entity);
     },
+    form: {
+      handler: function() {
+        this.$emit('entityUpdated', this.enitityUpdated());
+      },
+      deep: true,
+    },
   },
 };
 </script>
@@ -160,17 +111,5 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-}
-</style>
-<style scoped>
-.crud-form-border-top {
-  border-top: 1px solid #dee2e6;
-  padding-top: 20px;
-  padding-right: 16px;
-  margin-left: -24px;
-  margin-right: -24px;
-}
-.crud-form-button {
-  min-width: 70px;
 }
 </style>
