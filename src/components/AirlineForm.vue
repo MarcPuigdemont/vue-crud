@@ -47,6 +47,7 @@
 </template>
 <script>
 import constants from '@/constants';
+import formatColor from '@/services/colorService';
 
 export default {
   name: 'AirlineForm',
@@ -92,20 +93,10 @@ export default {
       return { ...this.form, ...{ services } };
     },
     updateFormFromEntity(airline) {
-      const expandColor = color =>
-        color.length === 7
-          ? color
-          : '#' +
-            Array.from(color)
-              .slice(1)
-              .map(c => c + c)
-              .join('');
-
       this.form = { ...airline };
 
-      // if color is in shorthand #000, the color input will not paint it properly, transform it to #000000
-      this.form.primary_color = expandColor(this.form.primary_color || '#000000');
-      this.form.secondary_color = expandColor(this.form.secondary_color || '#000000');
+      this.form.primary_color = formatColor(this.form.primary_color);
+      this.form.secondary_color = formatColor(this.form.secondary_color);
       this.form.services = Object.keys(airline.services).filter(k => airline.services[k]);
     },
   },
