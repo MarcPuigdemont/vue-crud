@@ -8,6 +8,14 @@ As a style framework, BootstrapVue has been chosen as it provides a directive an
 
 The coding style is based on Airbnb, but since it's using eslint + @vue/eslint-config-airbnb + prettier maybe some of the rules may be off. The intention is not being 100% accurate with one coding style but to provide a consistent style over all the written code.
 
+## Testing
+
+Testing is done with Jest for unit test and Cypress for e2e. Jest is used for snapshots, and component logic test. Cypress to ensure the whole app works as expected.
+
+To run the test, please, check the 'Run your unit tests' section.
+
+Coverage is also a must, so with Jest and Istanbul it can be tracked. I left out the Views folder, as they'll be tested properly with Cypress, and the files marked with '/_ istanbul ignore file _/' such as proxyService which unit tests would be to test axios.
+
 ## Desgin decission taken
 
 This I left behind, and could be added as improvements:
@@ -78,6 +86,18 @@ npm run build
 
 ```
 npm run lint
+```
+
+### Run your unit tests
+
+```
+npm run test:unit
+```
+
+To update the snapshots after a change on the components' template, please, use:
+
+```
+npm run test:unit -- -u
 ```
 
 ### Run your end-to-end tests
