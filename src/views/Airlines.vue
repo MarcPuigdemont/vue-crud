@@ -55,7 +55,7 @@ import AirlineList from '@/components/AirlineList.vue';
 import AirlineGrid from '@/components/AirlineGrid.vue';
 import Toolbar from '@/components/Toolbar.vue';
 import constants from '@/constants';
-import { AirlinesProxy } from '@/services/proxyService';
+import { AirlinesProxy } from '@/services/proxyService.jsx';
 
 export default {
   name: 'Airlines',

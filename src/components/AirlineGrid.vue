@@ -7,7 +7,7 @@
 </template>
 <script>
 import AirlineGridItem from './AirlineGridItem.vue';
-import { filterByStringAndServices } from '@/services/filterService';
+import { filterByStringAndServices } from '@/services/filterService.jsx';
 
 export default {
   name: 'AirlineGrid',

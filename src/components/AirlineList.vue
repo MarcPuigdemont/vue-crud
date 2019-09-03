@@ -12,7 +12,7 @@
 </template>
 <script>
 import AirlineListItem from './AirlineListItem.vue';
-import { filterByStringAndServices } from '@/services/filterService';
+import { filterByStringAndServices } from '@/services/filterService.jsx';
 
 export default {
   name: 'AirlineList',

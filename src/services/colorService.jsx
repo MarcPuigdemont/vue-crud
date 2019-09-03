@@ -1,7 +1,5 @@
-const formatColor = color => {
-  if (!color) {
-    return '#000000';
-  } else if (color.length === 7) {
+const formatColor = (color = '#000000') => {
+  if (color.length === 7) {
     return color;
   } else {
     return (

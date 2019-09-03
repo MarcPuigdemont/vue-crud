@@ -47,7 +47,7 @@
 </template>
 <script>
 import constants from '@/constants';
-import formatColor from '@/services/colorService';
+import formatColor from '@/services/colorService.jsx';
 
 export default {
   name: 'AirlineForm',
