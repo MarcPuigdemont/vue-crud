@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AirlineListItem should match the snapshot 1`] = `
+<div
+  class="list-group-item flex-column align-items-start"
+  data-test="list-row"
+  style="cursor: pointer;"
+>
+  <div
+    class="row"
+  >
+    <div
+      class="col"
+      data-test="list-row-iata"
+    >
+      
+      BX
+    
+    </div>
+     
+    <div
+      class="col"
+      data-test="list-row-name"
+    >
+      
+      Airline name
+    
+    </div>
+     
+    <div
+      class="col"
+      title="#ffffff"
+    >
+      <div
+        class="h-100"
+        style="background-color: rgb(255, 255, 255);"
+      />
+    </div>
+     
+    <div
+      class="col"
+      title="#000000"
+    >
+      <div
+        class="h-100"
+        style="background-color: rgb(0, 0, 0);"
+      />
+    </div>
+     
+    <div
+      class="col"
+    >
+      <div
+        class="airline-list-item-services"
+      />
+    </div>
+  </div>
+</div>
+`;

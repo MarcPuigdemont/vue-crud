@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AirlineListItemServices should match the snapshot 1`] = `
+<div
+  class="row"
+>
+  <div
+    class="col"
+  >
+    <i
+      class="material-icons"
+      data-test="list-row-service-bags"
+      disabled="disabled"
+      title="bags"
+    >
+      
+      work
+    
+    </i>
+  </div>
+  <div
+    class="col"
+  >
+    <i
+      class="material-icons"
+      data-test="list-row-service-checkin"
+      disabled="disabled"
+      title="checkin"
+    >
+      
+      where_to_vote
+    
+    </i>
+  </div>
+  <div
+    class="col"
+  >
+    <i
+      class="material-icons"
+      data-test="list-row-service-seats"
+      disabled="disabled"
+      title="seats"
+    >
+      
+      airline_seat_recline_normal
+    
+    </i>
+  </div>
+</div>
+`;

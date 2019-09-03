@@ -8,10 +8,15 @@
   </b-row>
 </template>
 <script>
+import { BRow, BCol } from 'bootstrap-vue';
 import constants from '@/constants';
 
 export default {
   name: 'AirlineListItemServices',
+  components: {
+    BRow,
+    BCol,
+  },
   props: { services: Array },
   methods: {
     getIcon: serviceName => constants.ICONS[serviceName.toUpperCase()] || 'error',

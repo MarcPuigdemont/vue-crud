@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import { BListGroupItem, BRow, BCol } from 'bootstrap-vue';
 import AirlineListItemServices from './AirlineListItemServices.vue';
 
 export default {
@@ -30,6 +31,9 @@ export default {
   },
   components: {
     AirlineListItemServices,
+    BListGroupItem,
+    BCol,
+    BRow,
   },
   computed: {
     servicesList: function() {
