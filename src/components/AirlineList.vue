@@ -11,6 +11,7 @@
   </b-list-group>
 </template>
 <script>
+import { BListGroup, BCol, BRow } from 'bootstrap-vue';
 import AirlineListItem from './AirlineListItem.vue';
 import { filterByStringAndServices } from '@/services/filterService.jsx';
 
@@ -18,6 +19,9 @@ export default {
   name: 'AirlineList',
   components: {
     AirlineListItem,
+    BListGroup,
+    BCol,
+    BRow,
   },
   props: {
     airlines: Array,

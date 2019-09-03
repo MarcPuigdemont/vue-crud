@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AirlineList should match the snapshot 1`] = `
+<div
+  class="list-group w-100"
+>
+  <div
+    class="row pl-3 font-weight-bold no-gutters"
+  >
+    <div
+      class="col"
+    >
+      IATA
+    </div>
+     
+    <div
+      class="col"
+    >
+      Name
+    </div>
+     
+    <div
+      class="col"
+    >
+      Primary Color
+    </div>
+     
+    <div
+      class="col"
+    >
+      Secondary Color
+    </div>
+     
+    <div
+      class="col"
+    >
+      Available Services
+    </div>
+  </div>
+   
+  <div
+    class="airline-grid-item"
+  />
+  <div
+    class="airline-grid-item"
+  />
+</div>
+`;

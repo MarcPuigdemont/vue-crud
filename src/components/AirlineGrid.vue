@@ -6,6 +6,7 @@
   </b-row>
 </template>
 <script>
+import { BCol, BRow } from 'bootstrap-vue';
 import AirlineGridItem from './AirlineGridItem.vue';
 import { filterByStringAndServices } from '@/services/filterService.jsx';
 
@@ -13,6 +14,8 @@ export default {
   name: 'AirlineGrid',
   components: {
     AirlineGridItem,
+    BCol,
+    BRow,
   },
   props: {
     airlines: Array,

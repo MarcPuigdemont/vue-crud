@@ -6,4 +6,8 @@ describe('AirlineListItemServices', () => {
     const wrapper = mount(AirlineListItemServices, { propsData: { services: [{ name: 'bags' }, { name: 'checkin' }, { name: 'seats' }] } });
     expect(wrapper.element).toMatchSnapshot();
   });
+  test('should return error icon if service name is not correct', () => {
+    const wrapper = mount(AirlineListItemServices, { propsData: { services: [{ name: 'not_bags' }] } });
+    expect(wrapper.element).toMatchSnapshot();
+  });
 });

@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import { BCard, BRow } from 'bootstrap-vue';
 import AirlineListItemServices from './AirlineListItemServices.vue';
 
 export default {
@@ -18,6 +19,8 @@ export default {
   },
   components: {
     AirlineListItemServices,
+    BCard,
+    BRow,
   },
   computed: {
     servicesList: function() {

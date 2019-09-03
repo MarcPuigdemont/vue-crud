@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AirlineGridItem should match the snapshot 1`] = `
+<div
+  class="card airline-card"
+  data-test="airline-card"
+>
+  <!---->
+  <!---->
+  <div
+    class="card-body"
+  >
+    <h4
+      class="card-title"
+    >
+      Airline name
+    </h4>
+    <h6
+      class="card-subtitle text-muted mb-2"
+    >
+      BX
+    </h6>
+    <div
+      class="row no-gutters"
+    >
+      <div
+        class="airline-card__color w-50"
+        style="background-color: rgb(255, 255, 255);"
+      />
+       
+      <div
+        class="airline-card__color w-50"
+        style="background-color: rgb(0, 0, 0);"
+      />
+    </div>
+     
+    <div
+      class="airline-list-item-services"
+    />
+  </div>
+  <!---->
+  <!---->
+</div>
+`;
