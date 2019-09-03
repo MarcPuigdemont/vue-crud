@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Toolbar should match the snapshot 1`] = `
+<div
+  class="d-flex justify-content-between"
+>
+  <button
+    class="btn add_button btn-secondary rounded-pill"
+    data-test="new-airline-button"
+    type="button"
+  >
+    <i
+      class="material-icons"
+    >
+      add
+    </i>
+  </button>
+   
+  <div
+    class="d-flex flex-direction-row"
+  >
+    <i
+      class="material-icons filter-button"
+      data-test="filter-bags"
+      disabled="disabled"
+      title="Filter by Bags service available"
+    >
+      
+      work
+    
+    </i>
+     
+    <i
+      class="material-icons filter-button"
+      data-test="filter-checkin"
+      disabled="disabled"
+      title="Filter by Check-in service available"
+    >
+      
+      where_to_vote
+    
+    </i>
+     
+    <i
+      class="material-icons filter-button"
+      data-test="filter-seats"
+      disabled="disabled"
+      title="Filter by Seats service available"
+    >
+      
+      airline_seat_recline_normal
+    
+    </i>
+     
+    <input
+      aria-label="Search/Filter"
+      class="form-control filter-form-search"
+      data-test="filter-input"
+      placeholder="Search/Filter"
+      type="search"
+    />
+  </div>
+</div>
+`;

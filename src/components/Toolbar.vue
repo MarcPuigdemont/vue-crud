@@ -41,9 +41,13 @@
   </div>
 </template>
 <script>
+import { BButton } from 'bootstrap-vue';
 import constants from '@/constants';
 
 export default {
+  components: {
+    BButton,
+  },
   data() {
     return {
       searchFilter: '',
