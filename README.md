@@ -10,6 +10,8 @@ The coding style is based on Airbnb, but since it's using eslint + @vue/eslint-c
 
 ## Testing
 
+Current state of the tests run on CircleCi: [![CircleCI](https://circleci.com/gh/MarcPuigdemont/vue-crud.svg?style=svg)](https://circleci.com/gh/MarcPuigdemont/vue-crud)
+
 Testing is done with Jest for unit test and Cypress for e2e. Jest is used for snapshots, and component logic test. Cypress to ensure the whole app works as expected.
 
 To run the test, please, check the 'Run your unit tests' section.
