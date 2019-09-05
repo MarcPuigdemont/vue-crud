@@ -16,6 +16,8 @@ To run the test, please, check the 'Run your unit tests' section.
 
 Coverage is also a must, so with Jest and Istanbul it can be tracked. I left out the Views folder, as they'll be tested properly with Cypress, and the files marked with '/_ istanbul ignore file _/' such as proxyService which unit tests would be to test axios.
 
+Coverage can be found on 'coverage' folder after running the unit tests. This folder is ignored on git
+
 ## Desgin decission taken
 
 This I left behind, and could be added as improvements:
@@ -23,8 +25,7 @@ This I left behind, and could be added as improvements:
 - Localization, only english is used.
 - Frontend pagination / Backend pagination.
 - Themes and theme selector for primary and secondary App colors (nothing to do with airplanes)
-  - Be able to select an Airline and apply it's colors to the current app them
-- Add unit tests
+  - Be able to select an Airline and apply it's colors to the current app theme
 - Integrate both unit and e2e tests with CircleCI
 - Improve style and add animations
 
@@ -32,6 +33,7 @@ Done:
 
 - Document e2e tests so it's easier to know what each part of the test does
 - Also, decouple e2e from icons and classes by using other selectors such as data-\*
+- Added unit tests and coverage
 
 ## Project setup
 
