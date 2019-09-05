@@ -1,0 +1,99 @@
+# Javascript Node CircleCI 2.1 configuration file
+#
+# Check https://circleci.com/docs/2.1/language-javascript/ for more details
+#
+version: 2.1
+executors:
+  vue-crud-docker:
+    docker:
+      - image: circleci/node:10-browsers
+  cypress-docker:
+    docker:
+      - image: cypress/base:8
+        environment:
+          ## this enables colors in the output
+          TERM: xterm
+commands:
+  start-server:
+    description: 'Starts server on background'
+    steps:
+      - run:
+          name: 'Start server'
+          background: true
+          command: npm run start-server
+  start-client:
+    description: 'Starts client on background'
+    steps:
+      - run:
+          name: 'Start client'
+          background: true
+          command: npm run serve
+jobs:
+  checkout:
+    executor: vue-crud-docker
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - persist_to_workspace:
+          root: .
+          paths: .
+  build:
+    executor: vue-crud-docker
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: 'Install dependencies'
+          command: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - persist_to_workspace:
+          root: .
+          paths: .
+  test_unit:
+    executor: vue-crud-docker
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: 'Run unit tests'
+          command: npm run test:unit
+  test_e2e:
+    executor: cypress-docker
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: 'Install dependencies'
+          command: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - start-server
+      - start-client
+      - run:
+          name: 'Run e2e tests'
+          command: $(npm bin)/cypress run
+workflows:
+  version: 2.1
+  build_and_test:
+    jobs:
+      - checkout
+      - build:
+          requires:
+            - checkout
+      - test_unit:
+          requires:
+            - build
+      - test_e2e
