@@ -26,17 +26,17 @@
       <b-form-group id="input-group-5" label="Services:" label-for="checkboxes-1" class="align-content-end w-50">
         <b-form-checkbox-group v-model="form.services" id="checkboxes-1" class="ml-2">
           <b-form-checkbox value="bags">
-            <i class="material-icons" title="Bags" :disabled="!form.services.find(s => s === 'bags')" data-test="form-bags-checkbox">
+            <i class="material-icons" title="Bags" :disabled="isServiceDisabled('bags')" data-test="form-bags-checkbox">
               {{ icons['BAGS'] }}
             </i>
           </b-form-checkbox>
           <b-form-checkbox value="checkin">
-            <i class="material-icons" title="Check-in" :disabled="!form.services.find(s => s === 'checkin')" data-test="form-checkin-checkbox">
+            <i class="material-icons" title="Check-in" :disabled="isServiceDisabled('checkin')" data-test="form-checkin-checkbox">
               {{ icons['CHECKIN'] }}
             </i>
           </b-form-checkbox>
           <b-form-checkbox value="seats">
-            <i class="material-icons" title="Seats" :disabled="!form.services.find(s => s === 'seats')" data-test="form-seats-checkbox">
+            <i class="material-icons" title="Seats" :disabled="isServiceDisabled('seats')" data-test="form-seats-checkbox">
               {{ icons['SEATS'] }}
             </i>
           </b-form-checkbox>
@@ -46,11 +46,21 @@
   </b-form>
 </template>
 <script>
+import { BForm, BFormCheckbox, BFormCheckboxGroup, BFormGroup, BFormInput, BFormInvalidFeedback, BFormRow } from 'bootstrap-vue';
 import constants from '@/constants';
 import formatColor from '@/services/colorService.jsx';
 
 export default {
   name: 'AirlineForm',
+  components: {
+    BForm,
+    BFormCheckbox,
+    BFormCheckboxGroup,
+    BFormGroup,
+    BFormInput,
+    BFormInvalidFeedback,
+    BFormRow,
+  },
   props: {
     action: {
       type: String,
@@ -77,7 +87,14 @@ export default {
   },
   mounted() {
     if (this.entity) {
-      this.updateFormFromEntity(this.entity);
+      const airline = this.entity;
+      const form = { ...airline };
+
+      form.primary_color = formatColor(form.primary_color);
+      form.secondary_color = formatColor(form.secondary_color);
+      form.services = Object.keys(airline.services).filter(k => airline.services[k]);
+
+      this.form = form;
     }
   },
   methods: {
@@ -92,18 +109,11 @@ export default {
       // Before spread operator: Object.assign({}, this.form, { services })
       return { ...this.form, ...{ services } };
     },
-    updateFormFromEntity(airline) {
-      this.form = { ...airline };
-
-      this.form.primary_color = formatColor(this.form.primary_color);
-      this.form.secondary_color = formatColor(this.form.secondary_color);
-      this.form.services = Object.keys(airline.services).filter(k => airline.services[k]);
+    isServiceDisabled(name) {
+      return !this.form.services.find(s => s === name);
     },
   },
   watch: {
-    entity() {
-      this.updateFormFromEntity(this.entity);
-    },
     form: {
       handler: function() {
         this.$emit('entityUpdated', this.enitityUpdated());
